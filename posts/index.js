@@ -3,9 +3,17 @@ const express = require("express");
 const router = express.Router();
 const { randomBytes } = require("crypto");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const posts = {};
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+    credentials: true,
+  })
+);
 
 app.use(bodyParser.json());
 app.use("/", router);

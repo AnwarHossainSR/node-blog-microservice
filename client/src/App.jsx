@@ -1,18 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
 import "./app.css";
+
 function App() {
-  // State to hold the list of posts
   const [posts, setPosts] = useState([]);
 
-  // State to hold the title of the new post
   const [title, setTitle] = useState("");
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add new post to the list
-    setPosts([...posts, { id: posts.length + 1, title }]);
-    // Clear the title field
+    const response = await axios.post("http://localhost:4000/posts", {
+      title,
+    });
+    setPosts([...posts, response.data]);
     setTitle("");
   };
 
@@ -27,7 +27,9 @@ function App() {
           placeholder="Enter title"
           className="input-field"
         />
-        <button type="submit" className="submit-button">Add Post</button>
+        <button type="submit" className="submit-button">
+          Add Post
+        </button>
       </form>
       <div className="post-container">
         {posts.map((post) => (
