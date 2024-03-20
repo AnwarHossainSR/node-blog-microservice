@@ -2,8 +2,17 @@
 const express = require("express");
 const router = express.Router();
 const { randomBytes } = require("crypto");
-
+const bodyParser = require("body-parser");
 const posts = {};
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use("/", router);
+
+router.get("/", (req, res) => {
+  res.send("Hello from posts service");
+});
 
 //get back all the posts
 router.get("/posts", async (req, res) => {
@@ -25,4 +34,4 @@ router.post("/posts", async (req, res) => {
   res.status(201).json(posts[id]);
 });
 
-application.listen(4000, () => console.log("Server is running..."));
+app.listen(4000, () => console.log("Server is running on 4000 port..."));
